@@ -7,11 +7,11 @@ import Image from 'next/image';
 import { manufacturers } from '@/constants';
 
 interface IProps {
-  manufacturer: string | null;
-  setManufacturer: (manufacturer: string) => void;
+  selected: string | null;
+  setSelected: (manufacturer: string) => void;
 }
 
-const SearchManufacturer = ({ manufacturer, setManufacturer }: IProps) => {
+const SearchManufacturer = ({ selected, setSelected }: IProps) => {
   const [query, setQuery] = useState<string>('');
 
   const filteredManufacturers =
@@ -26,7 +26,7 @@ const SearchManufacturer = ({ manufacturer, setManufacturer }: IProps) => {
 
   return (
     <div className="search-manufacturer">
-      <Combobox>
+      <Combobox value={selected} onChange={setSelected}>
         <div className="relative w-full">
           <Combobox.Button className="absolute top-[14px]">
             <Image
