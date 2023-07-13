@@ -7,15 +7,11 @@ import { Listbox, Transition } from '@headlessui/react';
 
 import { ICustomFilterProps, IOptionProps } from '@/types';
 
-const CustomFilter = ({ title, options, setFilter }: ICustomFilterProps) => {
+const CustomFilter = <ArgType extends unknown>({
+  options,
+  setFilter,
+}: ICustomFilterProps<ArgType>) => {
   const [selected, setSelected] = useState<IOptionProps>(options[0]);
-
-  const router = useRouter();
-
-  // const handleUpdateParams = (e: { title: string; value: string }) => {
-  //   const newPathName = updateSearchParams(title, e.value.toLowerCase());
-  //   router.push(newPathName);
-  // };
 
   return (
     <div className="w-fit">
@@ -23,7 +19,7 @@ const CustomFilter = ({ title, options, setFilter }: ICustomFilterProps) => {
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          setFilter(e.value);
+          setFilter(e.value as ArgType);
         }}
       >
         <div className="relative w-fit z-10">
