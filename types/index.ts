@@ -24,6 +24,8 @@ export interface ICarData {
   year: number;
 }
 
+export type CarState = ICarData[] & { message?: string };
+
 export interface IFilterProps {
   manufacturer: string;
   year: number;
@@ -37,10 +39,9 @@ export interface IOptionProps {
   value: string;
 }
 
-export interface ICustomFilterProps {
-  title: string;
+export interface ICustomFilterProps<ArgType> {
   options: IOptionProps[];
-  setFilter: (arg: string | number) => void;
+  setFilter: (arg: ArgType) => void;
 }
 
 export interface IShowMoreProps {
