@@ -5,15 +5,11 @@ import Image from 'next/image';
 
 import { CustomFilter, Hero, SearchBar, CarCard, ShowMore } from '@/components';
 import { fuels, yearsOfProduction } from '@/constants';
-import { ICarData, IFilterProps } from '@/types';
+import { CarState, ICarData } from '@/types';
 import { fetchCars } from '@/utils';
 
-interface IProps {
-  searchParams: IFilterProps;
-}
-
 export default function Home() {
-  const [allCars, setAllCars] = useState([]);
+  const [allCars, setAllCars] = useState<CarState>([]);
   const [loading, setLoading] = useState(false);
 
   //search states
@@ -21,22 +17,21 @@ export default function Home() {
   const [model, setModel] = useState('');
 
   //filter states
-  const [fuel, setFuel] = useState<string | number>('');
-  const [year, setYear] = useState<string | number>(2022);
+  const [fuel, setFuel] = useState('');
+  const [year, setYear] = useState(2022);
 
   //pagination states
   const [limit, setLimit] = useState(10);
 
   const getCars = async () => {
-    console.log('getCars called, limit is: ', limit);
     setLoading(true);
     try {
       const result = await fetchCars({
-        manufacturer: manufacturer || '',
+        manufacturer: manufacturer.toLowerCase() || '',
         year: year || 2022,
-        fuel: fuel || '',
+        fuel: fuel.toLowerCase() || '',
         limit: limit || 10,
-        model: model || '',
+        model: model.toLowerCase() || '',
       });
       setAllCars(result);
     } catch (error) {
@@ -50,8 +45,6 @@ export default function Home() {
     getCars();
   }, [fuel, manufacturer, model, limit]);
 
-  const isDataEmpty = !Array.isArray(allCars) || allCars.length < 1 || !allCars;
-
   return (
     <main className="Hero">
       <Hero />
@@ -63,12 +56,8 @@ export default function Home() {
         <div className="home__filters">
           <SearchBar setManufacturer={setManufacturer} setModel={setModel} />
           <div className="home__filter-container">
-            <CustomFilter title="fuel" options={fuels} setFilter={setFuel} />
-            <CustomFilter
-              title="year"
-              options={yearsOfProduction}
-              setFilter={setYear}
-            />
+            <CustomFilter options={fuels} setFilter={setFuel} />
+            <CustomFilter options={yearsOfProduction} setFilter={setYear} />
           </div>
         </div>
         {allCars.length > 0 ? (
