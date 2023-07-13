@@ -62,7 +62,7 @@ export default function Home() {
         </div>
         {allCars.length > 0 ? (
           <section>
-            <div>
+            <div className="home__cars-wrapper">
               {allCars?.map((car: ICarData, index) => (
                 <CarCard car={car} key={index} />
               ))}
