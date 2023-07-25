@@ -39,9 +39,9 @@ export interface IOptionProps {
   value: string;
 }
 
-export interface ICustomFilterProps<ArgType> {
+export interface CustomFilterProps {
+  title: string;
   options: IOptionProps[];
-  setFilter: (arg: ArgType) => void;
 }
 
 export interface IShowMoreProps {
