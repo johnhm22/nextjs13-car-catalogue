@@ -6,12 +6,7 @@ import Image from 'next/image';
 import { SearchManufacturer } from './';
 import { useRouter } from 'next/navigation';
 
-interface IProps {
-  setManufacturer: (arg: string) => void;
-  setModel: (arg: string) => void;
-}
-
-const SearchBar = ({ setManufacturer, setModel }: IProps) => {
+const SearchBar = () => {
   const [searchManufacturer, setSearchManufacturer] = useState<string>('');
   const [searchModel, setSearchModel] = useState<string>('');
 
@@ -36,32 +31,33 @@ const SearchBar = ({ setManufacturer, setModel }: IProps) => {
     if (searchManufacturer === '' && searchModel === '') {
       return alert('Please fill in the serach details');
     }
-    setModel(searchModel);
-    setManufacturer(searchManufacturer);
+    updateSearchParams(
+      searchModel.toLowerCase(),
+      searchManufacturer.toLowerCase()
+    );
   };
 
-  // Not required now that we are using client side.
-  // const updateSearchParams = (model: string, manufacturer: string) => {
-  //   const searchParams = new URLSearchParams(window.location.search);
+  const updateSearchParams = (model: string, manufacturer: string) => {
+    const searchParams = new URLSearchParams(window.location.search);
 
-  //   if (model) {
-  //     searchParams.set('model', model);
-  //   } else {
-  //     searchParams.delete('model');
-  //   }
+    if (model) {
+      searchParams.set('model', model);
+    } else {
+      searchParams.delete('model');
+    }
 
-  //   if (manufacturer) {
-  //     searchParams.set('manufacturer', manufacturer);
-  //   } else {
-  //     searchParams.delete('manufacturer');
-  //   }
+    if (manufacturer) {
+      searchParams.set('manufacturer', manufacturer);
+    } else {
+      searchParams.delete('manufacturer');
+    }
 
-  //   const newPathname = `${
-  //     window.location.pathname
-  //   }? ${searchParams.toString()}`;
+    const newPathname = `${
+      window.location.pathname
+    }?${searchParams.toString()}`;
 
-  //   router.push(newPathname);
-  // };
+    router.push(newPathname);
+  };
 
   return (
     <form className="searchbar" onSubmit={handleSearch}>
