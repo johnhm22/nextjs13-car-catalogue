@@ -40,29 +40,6 @@ const SearchBar = ({ setManufacturer, setModel }: IProps) => {
     setManufacturer(searchManufacturer);
   };
 
-  // Not required now that we are using client side.
-  // const updateSearchParams = (model: string, manufacturer: string) => {
-  //   const searchParams = new URLSearchParams(window.location.search);
-
-  //   if (model) {
-  //     searchParams.set('model', model);
-  //   } else {
-  //     searchParams.delete('model');
-  //   }
-
-  //   if (manufacturer) {
-  //     searchParams.set('manufacturer', manufacturer);
-  //   } else {
-  //     searchParams.delete('manufacturer');
-  //   }
-
-  //   const newPathname = `${
-  //     window.location.pathname
-  //   }? ${searchParams.toString()}`;
-
-  //   router.push(newPathname);
-  // };
-
   return (
     <form className="searchbar" onSubmit={handleSearch}>
       <div className="searchbar__item">
