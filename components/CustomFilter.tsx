@@ -5,13 +5,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Listbox, Transition } from '@headlessui/react';
 
-import { ICustomFilterProps, IOptionProps } from '@/types';
+import { CustomFilterProps } from '@/types';
+import { updateSearchParams } from '@/utils';
 
-const CustomFilter = <ArgType extends unknown>({
-  options,
-  setFilter,
-}: ICustomFilterProps<ArgType>) => {
-  const [selected, setSelected] = useState<IOptionProps>(options[0]);
+const CustomFilter = ({ title, options }: CustomFilterProps) => {
+  const [selected, setSelected] = useState(options[0]);
+
+  const router = useRouter();
+
+  const handleUpdateParams = (e: { title: string; value: string }) => {
+    const newPathName = updateSearchParams(title, e.value.toLowerCase());
+    router.push(newPathName);
+  };
 
   return (
     <div className="w-fit">
@@ -19,10 +24,10 @@ const CustomFilter = <ArgType extends unknown>({
         value={selected}
         onChange={(e) => {
           setSelected(e);
-          setFilter(e.value as ArgType);
+          handleUpdateParams(e);
         }}
       >
-        <div className="relative w-fit z-10">
+        <div className="w-fit relative z-10">
           <Listbox.Button className="custom-filter__btn">
             <span className="block truncate">{selected.title}</span>
             <Image
@@ -30,7 +35,7 @@ const CustomFilter = <ArgType extends unknown>({
               alt="chevron up down"
               width={20}
               height={20}
-              className="ml-4 object-contain"
+              className="object-contain ml-4"
             />
           </Listbox.Button>
           <Transition
