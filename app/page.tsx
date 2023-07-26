@@ -9,7 +9,7 @@ import {
   CarDetails,
 } from '@/components';
 import { fuels, yearsOfProduction } from '@/constants';
-import { ICarData, IFilterProps } from '@/types';
+import { CarState, ICarData, IFilterProps } from '@/types';
 import { fetchCars } from '@/utils';
 
 interface IProps {
@@ -17,7 +17,7 @@ interface IProps {
 }
 
 export default async function Home({ searchParams }: IProps) {
-  let allCars: ICarData[];
+  let allCars: CarState[];
 
   allCars = await fetchCars({
     manufacturer: searchParams.manufacturer || '',
@@ -47,7 +47,7 @@ export default async function Home({ searchParams }: IProps) {
         {!isDataEmpty ? (
           <section>
             <div className="home__cars-wrapper">
-              {allCars?.map((car: ICarData, index) => (
+              {allCars?.map((car: CarState, index) => (
                 <CarCard car={car} key={index} />
               ))}
             </div>
@@ -71,7 +71,7 @@ export default async function Home({ searchParams }: IProps) {
           <>
             <div className="home__error-container">
               <h2 className="text-xl text-black">Oops! No data available</h2>{' '}
-              <p>{allCars?.message}</p>
+              <p>{allCars[0].message}</p>
             </div>
           </>
         )}
