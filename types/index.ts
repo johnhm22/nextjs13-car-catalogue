@@ -24,7 +24,7 @@ export interface ICarData {
   year: number;
 }
 
-export type CarState = ICarData[] & { message?: string };
+export type CarState = ICarData & { message?: string };
 
 export interface IFilterProps {
   manufacturer: string;
