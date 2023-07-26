@@ -71,7 +71,7 @@ export default async function Home({ searchParams }: IProps) {
           <>
             <div className="home__error-container">
               <h2 className="text-xl text-black">Oops! No data available</h2>{' '}
-              <p>{allCars[0].message}</p>
+              <p>{allCars[0]?.message}</p>
             </div>
           </>
         )}
