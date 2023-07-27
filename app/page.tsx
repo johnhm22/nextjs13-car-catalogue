@@ -9,7 +9,7 @@ import {
   CarDetails,
 } from '@/components';
 import { fuels, yearsOfProduction } from '@/constants';
-import { CarState, ICarData, IFilterProps } from '@/types';
+import { CarState, IFilterProps } from '@/types';
 import { fetchCars } from '@/utils';
 
 interface IProps {
@@ -51,21 +51,10 @@ export default async function Home({ searchParams }: IProps) {
                 <CarCard car={car} key={index} />
               ))}
             </div>
-            <div className="flex-center w-full mt-16">
-              <Image
-                src="public/loader.svg"
-                alt="loader"
-                width={50}
-                height={50}
-                className="object-contain"
-              />
-            </div>
-
-            {/* <ShowMore
-              pageNumber={limit / 10}
-              isNext={limit > allCars.length}
-              setLimit={setLimit}
-            /> */}
+            <ShowMore
+              pageNumber={(searchParams.limit || 10) / 10}
+              isNext={searchParams.limit > allCars.length}
+            />
           </section>
         ) : (
           <>
