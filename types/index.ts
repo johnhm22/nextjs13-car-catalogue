@@ -47,5 +47,4 @@ export interface CustomFilterProps {
 export interface IShowMoreProps {
   pageNumber: number;
   isNext: boolean;
-  setLimit: (arg: number) => void;
 }
